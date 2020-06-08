@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
+using System.Diagnostics;
 using System.Windows.Annotations;
 using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
@@ -62,7 +62,7 @@ namespace WpfCap
 
         private void ExecutedDebugSelectedText(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show(SelectedText);
+            Trace.WriteLine(SelectedText);
         }
 
         private void CanExecuteDebugSelectedText(object sender, CanExecuteRoutedEventArgs e)
