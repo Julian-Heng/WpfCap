@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Annotations;
@@ -19,7 +20,9 @@ namespace WpfCap
 
         public void ViewFile()
         {
-            XpsDocument xpsDoc = new XpsDocument(Constants.INPUTFILE, FileAccess.Read);
+            string fileName = "file-sample_1MB.xps";
+            string path = Path.Combine(Environment.CurrentDirectory, @"..\..\Resources\", fileName);
+            XpsDocument xpsDoc = new XpsDocument(path, FileAccess.Read);
             
             var docSequence = xpsDoc.GetFixedDocumentSequence();
             var xpsDocRef = docSequence.References.First();
