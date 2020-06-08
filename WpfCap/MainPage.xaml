@@ -90,6 +90,11 @@
             </Setter>
         </Style>
     </Page.Resources>
+    <Page.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainPage.CustomRoutedCommand}"
+                        Executed="ExecutedCustomCommand"
+                        CanExecute="CanExecuteCustomCommand" />
+    </Page.CommandBindings>
     <Grid>
         <DocumentViewer Name="Viewer" HorizontalAlignment="Left" VerticalAlignment="Top">
             <DocumentViewer.ContextMenu>
@@ -103,6 +108,8 @@
                     <!-- Remove Highlights from a user selection. -->
                     <MenuItem Command="ann:AnnotationService.ClearHighlightsCommand"
                               Header="Remove Highlights" />
+                    <MenuItem Command="local:MainPage.CustomRoutedCommand"
+                              Header="Custom button boiiiiii" />
                 </ContextMenu>
             </DocumentViewer.ContextMenu>
 
