@@ -34,12 +34,11 @@
                                 </Grid.RowDefinitions>
                                 <ToolBar ToolBarTray.IsLocked="True"
                                          KeyboardNavigation.TabNavigation="Continue">
-                                    <Button Command="ApplicationCommands.Print"
-                                            CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                            Content="Print" />
                                     <Button Command="ApplicationCommands.Copy"
                                             CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             Content="Copy" />
+                                    <Button Command="local:MainPage.DebugSelectedTextCommand"
+                                            Content="Debug"/>
                                     <Separator />
                                     <Button Command="NavigationCommands.IncreaseZoom"
                                             CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
