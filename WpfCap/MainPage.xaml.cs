@@ -14,7 +14,7 @@ namespace WpfCap
 {
     public partial class MainPage : Page
     {
-        public static RoutedUICommand CustomRoutedCommand = new RoutedUICommand();
+        public static RoutedUICommand DebugSelectedTextCommand = new RoutedUICommand();
         
         public MainPage()
         {
@@ -60,12 +60,12 @@ namespace WpfCap
             }
         }
 
-        private void ExecutedCustomCommand(object sender, ExecutedRoutedEventArgs e)
+        private void ExecutedDebugSelectedText(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show(SelectedText);
         }
 
-        private void CanExecuteCustomCommand(object sender, CanExecuteRoutedEventArgs e)
+        private void CanExecuteDebugSelectedText(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = SelectedText != null;
         }
