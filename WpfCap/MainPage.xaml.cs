@@ -14,7 +14,7 @@ namespace WpfCap
 {
     public partial class MainPage : Page
     {
-        public static RoutedUICommand DebugSelectedTextCommand = new RoutedUICommand();
+        public static readonly RoutedUICommand DebugSelectedTextCommand = new RoutedUICommand();
         
         public MainPage()
         {
@@ -25,15 +25,14 @@ namespace WpfCap
 
         public void ViewFile()
         {
-            string fileName = "file-sample_1MB.xps";
-            string path = Path.Combine(Environment.CurrentDirectory, @"..\..\Resources\", fileName);
-            XpsDocument xpsDoc = new XpsDocument(path, FileAccess.Read);
-            
+            var fileName = "file-sample_1MB.xps";
+            var path = Path.Combine(Environment.CurrentDirectory, @"..\..\Resources\", fileName);
+            var xpsDoc = new XpsDocument(path, FileAccess.Read);
             var docSequence = xpsDoc.GetFixedDocumentSequence();
-            var xpsDocRef = docSequence.References.First();
+            var xpsDocRef = docSequence?.References.First();
 
-            //get the fixed document to enumerate
-            FixedDocument xpsFixedDoc = xpsDocRef.GetDocument(false);
+            // Get the fixed document to enumerate
+            var xpsFixedDoc = xpsDocRef?.GetDocument(false);
 
             Viewer.Document = docSequence;
             Viewer.UpdateLayout();
@@ -41,33 +40,21 @@ namespace WpfCap
 
         private void StartAnnotations()
         {
-            var _annot = new AnnotationService(Viewer);
+            var annotate = new AnnotationService(Viewer);
             
-            if (_annot.IsEnabled)
-                _annot.Disable();
+            if (annotate.IsEnabled)
+                annotate.Disable();
             
-            var _annotStream = new FileStream("annots.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            var annotateStream = new FileStream("annots.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             
-            AnnotationStore _annotStore = new XmlStreamStore(_annotStream);
-            _annot.Enable(_annotStore);
+            AnnotationStore annotateStore = new XmlStreamStore(annotateStream);
+            annotate.Enable(annotateStore);
         }
         
-        public string SelectedText {
-            get {
-                var selProperty = Viewer.GetType ().GetProperty ("TextSelection", BindingFlags.Instance | BindingFlags.NonPublic);
-                var sel = selProperty.GetValue (Viewer, null) as TextSelection;
-                return sel?.Text;
-            }
-        }
-
-        private void ExecutedDebugSelectedText(object sender, ExecutedRoutedEventArgs e)
-        {
-            Trace.WriteLine(SelectedText);
-        }
-
-        private void CanExecuteDebugSelectedText(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = SelectedText != null;
-        }
+        private string SelectedText =>
+            (Viewer.GetType().GetProperty("TextSelection", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(Viewer, null) as
+                TextSelection)?.Text;
+        private void ExecutedDebugSelectedText(object sender, ExecutedRoutedEventArgs e) => Trace.WriteLine(SelectedText);
+        private void CanExecuteDebugSelectedText(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = ! string.IsNullOrEmpty(SelectedText);
     }
 }
